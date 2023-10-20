@@ -1,48 +1,40 @@
 class TreeNode {
   
-  PVector position;
+  PVector pos;
   ArrayList<Colonizer> closestColonizers;
-  PVector direction = null;
+  PVector influenceDirection;
+  int colonizersCount;
+  float sw;
+  TreeNode parent;
   
   
-  TreeNode(PVector position) {
-    this.position = position;
+  TreeNode(PVector pos, TreeNode parent) {
+    this.pos = pos;
     this.closestColonizers = new ArrayList<Colonizer>();
-    println("Created Tree Node");
+    this.influenceDirection = new PVector(0, 0, 0);
+    this.parent = parent;
+  }
+  
+  TreeNode(PVector pos) {
+    this.pos = pos;
+    this.closestColonizers = new ArrayList<Colonizer>();
+    this.influenceDirection = new PVector(0, 0, 0);
   }
   
   void addInfluence(Colonizer c) {
     closestColonizers.add(c);
   }
-  
-  void applyInfluence() {
-    int closestColonizersSize = closestColonizers.size();
-    if (closestColonizersSize == 0){
-      return;
-    }
-    //if (closestColonizersSize == 1) {
-    //  Colonizer c = closestColonizers.get(0);
-    //  PVector distance = PVector.sub(this.position, c.position);
-    //  this.direction = distance.normalize();
-    //  return;
-    //}
-    //println(closestColonizersSize);
-    this.direction = new PVector(0, 0, 0);  
-    for (int i = 0; i < closestColonizersSize; i++) {
-      Colonizer c = closestColonizers.get(i);
-      PVector distance = PVector.sub(this.position, c.position);
-      direction.add(distance.normalize());
-    }
-    direction.normalize();
+
+  void applyInfluence(PVector difference){
+    influenceDirection.add(difference.normalize()).normalize();
   }
   
+
   void display() {
-    fill(color(255));
-    noStroke();
-    pushMatrix();
-    translate(position.x, position.y, position.z);
-    sphereDetail(7);
-    sphere(5);
-    popMatrix();
+    strokeWeight(sw);
+    stroke(114, 95, 75);
+    line3D(pos.x, pos.y, pos.z, parent.pos.x, parent.pos.y, parent.pos.z, sw, color(114, 95, 75));
+    
+    //println("Pos: " + pos + "   Parent Pos: " + parent.pos); 
   }
 }

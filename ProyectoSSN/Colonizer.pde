@@ -1,18 +1,19 @@
 class Colonizer {
   
-  PVector position;
-  float deleteDistance = 5;
-  float attractionDistance = 200;
+  PVector pos;
+  float deleteDistance = 15;
+  float attractionDistance = 120;
+  color c = color(255);
   
-  Colonizer(PVector position) {
-    this.position = position;
+  Colonizer(PVector pos) {
+    this.pos = pos;
   }
   
   void display() {
-    fill(color(255));
+    fill(c);
     noStroke();
     pushMatrix();
-    translate(position.x, position.y, position.z);
+    translate(pos.x, pos.y, pos.z);
     sphereDetail(7);
     sphere(5);
     popMatrix();
