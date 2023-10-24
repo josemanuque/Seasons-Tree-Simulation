@@ -1,10 +1,16 @@
+//Simulación de estaciones climáticas
+//Fabio Calderón, Juleisy Porras, José Manuel Quesada
+
 import peasy.*;
+import controlP5.*;
 
 PeasyCam cam;
+ControlP5 cp5;
 
 ColonizerSystem colonizerSystem;
 Tree tree;
 ArrayList<TreeNode> treeNodes;
+Ground ground;
 
 void setup() {
   size(800, 600, P3D);
@@ -12,6 +18,8 @@ void setup() {
   cam = new PeasyCam(this, 0, 0, 0, 2000);
   tree = new Tree();
   colonizerSystem = tree.branchColonizers;
+  ground = new Ground(#005c00);
+  initControls();
 }
 
 void line3D(float x1, float y1, float z1, float x2, float y2, float z2, float weight, color strokeColour) {
@@ -50,4 +58,5 @@ void draw() {
   colonizerSystem.display();
   tree.display();
   tree.generateBranches();
+  ground.display();
 }
