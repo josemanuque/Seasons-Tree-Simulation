@@ -10,16 +10,22 @@ class ColonizerSystem {
     this.treeNodes = treeNodes;
     this.createBranchColonizers();
   }
-
+  
+  
+  /* 
+   * Creates the colonizers.
+   * Uses an algorithm that is based creating random positions 
+   * that as a whole take the form of an empty half sphere. 
+   */
   void createBranchColonizers() {
     float radius = min(width, height) / 2.0 * 0.8;
 
     for (int i = 0; i < 1000; i++) {
       float theta = random(0, TWO_PI);
       float phi = random(PI / 2, PI);  // Limita phi a la mitad inferior de la esfera
-      float x = radius * sin(phi) * cos(theta) * random(0.7, 2.0);
-      float y = radius * cos(phi) * random(0.7, 2.0) + 200;  // Cambiado sin(phi) por cos(phi)
-      float z = radius * sin(phi) * sin(theta) * random(0.7, 2.0);
+      float x = radius * sin(phi) * cos(theta) * random(0.7, 1.8);
+      float y = radius * cos(phi) * random(0.7, 1.8) + 200;  // Cambiado sin(phi) por cos(phi)
+      float z = radius * sin(phi) * sin(theta) * random(0.7, 1.8);
       
       //float theta = random(0, TWO_PI);
       //float phi = random(PI / 2, PI);  // Limita phi a la mitad inferior de la esfera
@@ -33,20 +39,18 @@ class ColonizerSystem {
     colonizers.size();
   }
 
-  void display() {
-    for (Colonizer c : colonizers) {
-      c.display();
-    }
-  }
-
-  // Applies an influence (difference vector) to the closest tree node for the next generation node
+  /* 
+   * For each colonizer, it finds the closest tree node and 
+   * applies influence for position of the next generation node
+   * Applies influence only if the closest node is within the minimum atraction distance.
+   * If the closest node is beyond the maximum distance to remove the colonizer.
+   */
   void applyInfluence() {
     //println(colonizers.size());
     Iterator<Colonizer> iterator = colonizers.iterator();
 
     while (iterator.hasNext()) {
       Colonizer c = iterator.next();
-      c.c = color(255);
       // Find the closest tree node for each colonizer and its distance
       float minDistance = Float.MAX_VALUE;
       TreeNode closestTreeNode = null;
@@ -73,7 +77,10 @@ class ColonizerSystem {
     }
   }
 
-  // Checks if a any colonizer is close enough to a specific tree node
+  /* Checks if a any colonizer is close enough to a specific tree node
+   * If its close enough returns true, else false.
+   * Used by trunk nodes to check if they are close enough to an atractor to stop trunk generation. 
+   */
   boolean isCloseEnough(TreeNode t) {
     for (Colonizer c : colonizers) {
       float distance = PVector.dist(t.pos, c.pos);
@@ -83,7 +90,15 @@ class ColonizerSystem {
     }
     return false;
   }
-
+  
+  // Displays all the colonizers.
+  void display() {
+    for (Colonizer c : colonizers) {
+      c.display();
+    }
+  }
+  
+  // Deprecated
   /*   void applyInfluence(){
    for (TreeNode t : treeNodes) {
    t.applyInfluence();

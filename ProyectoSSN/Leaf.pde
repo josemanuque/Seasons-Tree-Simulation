@@ -20,7 +20,7 @@ class Leaf {
     this.pos = pos;
     this.orientation = orientation;
     this.size = size;
-    this.c = color(255);
+    this.c = color(97, 138, 61);
   }
 
 
@@ -31,11 +31,18 @@ class Leaf {
   }
 
   void display() {
+    //fill(c);
+    //noStroke();
+    //pushMatrix();
+    //translate(pos.x, pos.y, pos.z);
+    //ellipse(0, 0, size * 2, size * 5);
+    //popMatrix();
     fill(c);
     noStroke();
     pushMatrix();
     translate(pos.x, pos.y, pos.z);
-    ellipse(0, 0, size * 2, size * 5);
+    sphereDetail(1);
+    sphere(5);
     popMatrix();
   }
 
