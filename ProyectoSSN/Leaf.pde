@@ -1,5 +1,6 @@
 class Leaf {
   PVector pos;
+  PVector orientation;
   PVector vel;
   PVector acc;
   color c;
@@ -14,6 +15,14 @@ class Leaf {
     mass = random(10, 30);
     size = random(3, 10);
   }
+  
+  Leaf(PVector pos, PVector orientation, float size) {
+    this.pos = pos;
+    this.orientation = orientation;
+    this.size = size;
+    this.c = color(255);
+  }
+
 
   void update() {
     vel.add(acc);

@@ -41,7 +41,7 @@ class ColonizerSystem {
 
   // Applies an influence (difference vector) to the closest tree node for the next generation node
   void applyInfluence() {
-    println(colonizers.size());
+    //println(colonizers.size());
     Iterator<Colonizer> iterator = colonizers.iterator();
 
     while (iterator.hasNext()) {
