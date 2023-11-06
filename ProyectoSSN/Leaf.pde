@@ -23,14 +23,7 @@ class Leaf {
     this.c = color(97, 138, 61);
   }
 
-
-  void update() {
-    vel.add(acc);
-    pos.add(vel);
-    acc.mult(0);
-  }
-
-  void display() {
+void display() {
     //fill(c);
     //noStroke();
     //pushMatrix();
@@ -44,22 +37,5 @@ class Leaf {
     sphereDetail(1);
     sphere(5);
     popMatrix();
-  }
-
-  void applyForce(PVector force) {
-    PVector f = force.copy();
-    f.div(mass);
-    acc.add(f);
-  }
-
-  void applyGravity(PVector force) {
-    acc.add(force);
-  }
-
-  void applyFriction(float c) {
-    PVector fric = vel.copy();
-    fric.normalize();
-    fric.mult(-c);
-    applyForce(fric);
   }
 }

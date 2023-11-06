@@ -12,4 +12,9 @@ class Ground {
     box(1000, 70, 1000);
     popMatrix();
   }
+
+  void changeColor(color groundColor) {
+    c = groundColor;
+    display();
+  }
 }

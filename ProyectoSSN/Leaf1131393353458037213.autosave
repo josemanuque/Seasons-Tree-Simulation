@@ -1,0 +1,73 @@
+class Leaf extends AgentSystem3D {
+  ArrayList<Spring> springs;
+  float mass = 4;
+  float k = 0.5;
+  float friction = 0.1;
+  float drag = 0.005;
+  color c;
+  float mouseDist = 150;
+  int numPoints = 7;
+  int numFixedPoints = 4;
+
+  Leaf() {
+    super();
+    springs = new ArrayList();
+  }
+
+  void createLeaf(color leafColor) {
+    colorMode(HSB);
+    //c = leafColor;
+    c = color(100, 255, 100); // Color verde para la hoja
+    for (int i = 0; i < numPoints; i++) {
+      float angle = map(i, 0, numPoints, 0, TWO_PI);
+      float x = mouseX + cos(angle) * mouseDist;
+      float y = mouseY + sin(angle) * (mouseDist * 0.5); // Ajustar la forma ovalada
+      Agent3D a = new Agent3D(x, y, 0, mass);
+      agents.add(a);
+    }
+
+    // Conectar los puntos con resortes
+    for (int i = 0; i < agents.size(); i++) {
+      Agent3D a1 = agents.get(i);
+      Agent3D a2 = agents.get((i + 1) % agents.size());
+      springs.add(new Spring(a1, a2, a1.pos.dist(a2.pos), k));
+    }
+
+
+    agents.get(2).fix();
+    agents.get(3).fix();
+    agents.get(4).fix();
+    agents.get(5).fix();
+
+    for (Agent3D a : agents) {
+      a.randomVel(1);
+    }
+  }
+
+  void update() {
+    for (Agent3D a : agents) {
+      a.applyFriction(friction);
+      //a.applyDrag(drag);
+      a.update();
+      a.display();
+    }
+    for (Spring s : springs) {
+      s.update();
+    }
+
+    stroke(255);
+    strokeWeight(2);
+    fill(c);
+    beginShape();
+    for (int i = 0; i < agents.size(); i++) {
+      Agent3D a = agents.get(i);
+      vertex(a.pos.x, a.pos.y);
+    }
+    endShape(CLOSE);
+  }
+
+  void clear() {
+    agents.clear();
+    springs.clear();
+  }
+}
