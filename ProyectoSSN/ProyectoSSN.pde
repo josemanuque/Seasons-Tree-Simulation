@@ -59,4 +59,12 @@ void draw() {
   tree.display();
   tree.generateBranches();
   ground.display();
+  
+  if(keyPressed && keyCode == LEFT){
+    tree.applyWindForce(new PVector(-0.1, 0, 0));
+    //println("Entered");
+  }
+  if(keyPressed && keyCode == RIGHT){
+    tree.applyWindForce(new PVector(0.1, 0, 0));
+  }
 }

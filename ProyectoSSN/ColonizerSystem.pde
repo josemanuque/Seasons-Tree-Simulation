@@ -14,7 +14,7 @@ class ColonizerSystem {
   
   /* 
    * Creates the colonizers.
-   * Uses an algorithm that is based creating random positions 
+   * Uses an algorithm that is based on creating random positions 
    * that as a whole take the form of an empty half sphere. 
    */
   void createBranchColonizers() {

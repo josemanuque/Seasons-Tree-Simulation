@@ -6,6 +6,8 @@ class Leaf {
   color c;
   float size;
   float mass;
+  TreeNode associatedNode;
+  float angle;
 
   Leaf(float x, float y, float z, color leafColor) {
     pos = new PVector(x, y, z);
