@@ -61,10 +61,10 @@ void draw() {
   ground.display();
   
   if(keyPressed && keyCode == LEFT){
-    tree.applyWindForce(new PVector(-0.1, 0, 0));
+    tree.applyWindForce(new PVector(-0.1, random(-0.1, 0.1), random(-0.1, 0.1)));
     //println("Entered");
   }
   if(keyPressed && keyCode == RIGHT){
-    tree.applyWindForce(new PVector(0.1, 0, 0));
+    tree.applyWindForce(new PVector(0.1, random(-0.1, 0.1), random(-0.1, 0.1)));
   }
 }
