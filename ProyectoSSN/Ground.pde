@@ -5,16 +5,11 @@ class Ground {
     c = groundColor;
   }
 
-  void display() {
+  void display(color groundColor) {
     pushMatrix();
     translate(0, 465, 0);
-    fill(c);
+    fill(groundColor);
     box(1000, 70, 1000);
     popMatrix();
-  }
-
-  void changeColor(color groundColor) {
-    c = groundColor;
-    display();
   }
 }

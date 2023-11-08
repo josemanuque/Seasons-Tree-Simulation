@@ -12,7 +12,7 @@ class Tree {
   int trunkNodeLength = 10;
   int branchNodeLength = 5;
   int maxLeavesPerNode = 3;
-  float leafGenerationProbability = 0.01;
+  float leafGenerationProbability = 0.4;
 
   Tree() {
     treeNodes = new ArrayList<TreeNode>();
@@ -20,7 +20,7 @@ class Tree {
     branchColonizers = new ColonizerSystem(this.treeNodes);
     this.addTrunk();
   }
-  
+
   /*
    * Method that creates the first treeNode for the tree (root)
    * Gets called by addTrunk()
@@ -36,9 +36,9 @@ class Tree {
   /*
    * Method that generates the trunk of the tree
    * - Keeps growing vertically while no colonizer is aplying influence.
-   * - Defines the index of treeNodes where the trunk nodes end. 
+   * - Defines the index of treeNodes where the trunk nodes end.
    */
-   
+
   void addTrunk() {
     addRoot();
     // While the current node has no influence direction, add a new node (trunk)
@@ -54,10 +54,10 @@ class Tree {
     //currentNode.isBranch = false;
     trunkEndIndex = treeNodes.size();
   }
-  
+
   /*
    * Method that generates branches using treeNodes if there are colonizers left
-   * - If there are more than 8000 branches some colonizers were not removed properly, 
+   * - If there are more than 8000 branches some colonizers were not removed properly,
    *   hence removing them and not continuing.
    * - For each treeNode it generates a new node in the position of the influence
    *   with magnitude of the desired length of the branch.
@@ -95,9 +95,9 @@ class Tree {
         n.influenceDirection.z = 0;
       }
     }
-    generateLeaves();
+    //generateLeaves();
   }
-  
+
   /*
    * Method that generates leaves
    * - Generates leaves on a node only if the node is part of the branches
@@ -106,9 +106,9 @@ class Tree {
    * - Uses parallel transport frame methods to get the proper position and orientarion of the leaves.
    * - Each valid node will have a random of maxLeavesPerNode.
    */
-  void generateLeaves() {
+  void generateLeaves(color leafColor) {
     for (TreeNode node : treeNodes) {
-      if (node.isBranch == true && shouldGenerateLeavesForNode(node)) {
+      if (node.isBranch == true && shouldGenerateLeavesForNode()) {
         int numLeavesPerBranch = int(random(maxLeavesPerNode));
         PVector tangent, normal, binormal;
         float angle = 0.0;  // Inicializa el ángulo de posición de la hoja
@@ -123,9 +123,9 @@ class Tree {
         for (int i = 0; i < numLeavesPerBranch; i++) {
           PVector leafPosition = calculateLeafPosition(node, angle);
           PVector leafOrientation = calculateLeafOrientation(tangent, normal, binormal);
-          float leafSize = 10.0;  // Ajusta el tamaño según sea necesario
 
-          Leaf leaf = new Leaf(leafPosition, leafOrientation, leafSize);
+          Leaf leaf = new Leaf(leafPosition, leafOrientation, leafColor);
+          leaf.createLeaf();
           leaves.add(leaf);
 
           // Aumenta el ángulo para posicionar la siguiente hoja
@@ -134,7 +134,7 @@ class Tree {
       }
     }
   }
-  
+
   /*
    * Method that calculates the Parallel Transport Frame
    * - Parallel Transport Frame sets a position parallel to the frame (node)
@@ -168,14 +168,14 @@ class Tree {
     return orientation;
   }
 
-  boolean shouldGenerateLeavesForNode(TreeNode node) {
+  boolean shouldGenerateLeavesForNode() {
     // Generar hojas de manera aleatoria
     return random(1) < leafGenerationProbability;
   }
 
   void display() {
     int sizeTreeNodes = treeNodes.size();
-    int sizeLeaves = leaves.size();
+    
 
     // Trunk display
     for (int i = 1; i < trunkEndIndex; i++) {
@@ -191,6 +191,10 @@ class Tree {
       t.sw = sw;
       t.display();
     }
+  }
+
+  void displayLeaves() {
+    int sizeLeaves = leaves.size();
     for (int i = 0; i < sizeLeaves; i++) {
       Leaf l = leaves.get(i);
       l.display();

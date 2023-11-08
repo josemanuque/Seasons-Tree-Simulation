@@ -22,26 +22,23 @@ void draw() {
   strokeWeight(1);
   noFill();
   box(1000);
+
   season.initialSeason();
-  
-  keyPressed();
+
+
 }
 
 void keyPressed() {
-  if (key == 'i') {
-    println("Hola soy invierno");
-    season.winter();
+  if (keyPressed && key == 'i') {
+    season.specialSeason(#FFFFFF, #FFFFFF);
   }
-  if (key == 'p') {
-    println("Hola soy primavera");
-    season.spring();
+  if (keyPressed && key == 'p') {
+    season.specialSeason(#8ace3d, #d5408e);
   }
-  if (key == 'o') {
-    println("Hola soy otoño");
-    season.autumn();
+  if (keyPressed && key == 'v') {
+    season.specialSeason(#005c00, #005c00);
   }
-  if (key == 'v') {
-    println("Hola soy verano");
-    season.summer();
+  if (keyPressed && key == 'o') {
+    season.specialSeason(#8B5737, #FFA500);
   }
 }
