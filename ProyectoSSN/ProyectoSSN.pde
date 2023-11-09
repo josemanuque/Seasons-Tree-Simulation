@@ -36,6 +36,8 @@ void draw() {
   } */
 
   season.initialSeason();
+  keyPressed();
+  
 }
 
 void keyPressed() {
