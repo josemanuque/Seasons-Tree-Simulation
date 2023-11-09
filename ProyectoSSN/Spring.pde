@@ -4,7 +4,7 @@ class Spring {
   float restLen;
   float k;
   color c;
-  
+
   Spring(Agent3D a1, Agent3D a2, float restLen, float k) {
     this.a1 = a1;
     this.a2 = a2;
@@ -12,6 +12,8 @@ class Spring {
     this.k = k;
     c = color(255);
   }
+ 
+  
   void update() {
     PVector springForce = PVector.sub(a2.pos, a1.pos);
     float len = springForce.mag();

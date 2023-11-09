@@ -55,10 +55,6 @@ class Tree {
       currentNode = nextNode;
       currentNode.isBranch = false;
     }
-    //TreeNode nextNode = new TreeNode(new PVector(random(5), currentNode.pos.y - trunkNodeLength, random(5)), currentNode);
-    //treeNodes.add(nextNode);
-    //currentNode = nextNode;
-    //currentNode.isBranch = false;
     trunkEndIndex = treeNodes.size();
   }
 
@@ -79,7 +75,6 @@ class Tree {
 
     // For each node it creaes a new node in the direction of the influence
     int sizeOfTreeNodes = treeNodes.size();
-    //println(sizeOfTreeNodes);
     if (sizeOfTreeNodes > 8000) {
       branchColonizers.colonizers.clear();
       return;
@@ -91,8 +86,6 @@ class Tree {
         PVector influenceVector = n.influenceDirection.setMag(branchNodeLength);
         PVector newPos = PVector.add(n.pos, influenceVector);
 
-        //println(newPos);
-
         TreeNode nextNode = new TreeNode(newPos, n);
         treeNodes.add(nextNode);
         currentNode = nextNode;
@@ -102,7 +95,6 @@ class Tree {
         n.influenceDirection.z = 0;
       }
     }
-    //generateLeaves();
   }
 
   /*
@@ -118,19 +110,11 @@ class Tree {
     for (TreeNode node : treeNodes) {
       if (node.isBranch && shouldGenerateLeavesForNode(leavesQuantity)) {
         int numLeavesPerBranch = int(random(maxLeavesPerNode));
-        PVector tangent, normal, binormal;
         float angle = 0.0;  // Inicializa el ángulo de posición de la hoja
-
-        // Calcula el "parallel transport frame" para la rama
-        TransportFrame transportFrame = calculateParallelTransportFrame(node);
-        tangent = transportFrame.tangent;
-        normal = transportFrame.normal;
-        binormal = transportFrame.binormal;
 
         // Genera varias hojas alrededor de la rama
         for (int i = 0; i < numLeavesPerBranch; i++) {
           PVector leafPosition = calculateLeafPosition(node, angle);
-          PVector leafOrientation = calculateLeafOrientation(tangent, normal, binormal);
 
           Leaf leaf = new Leaf(leafPosition, leafColor, leafSize);
           leaf.associatedNode = node;
@@ -145,20 +129,6 @@ class Tree {
     }
   }
 
-  /*
-   * Method that calculates the Parallel Transport Frame
-   * - Parallel Transport Frame sets a position parallel to the frame (node)
-   */
-  TransportFrame calculateParallelTransportFrame(TreeNode branch) {
-    PVector tangent = branch.influenceDirection.copy().normalize();  // Dirección de la rama
-    PVector up = PVector.random3D();  // Vector auxiliar para mantener la orientación constante
-    PVector binormal = tangent.cross(up).normalize();
-    PVector normal = binormal.cross(tangent).normalize();
-
-    // Devuelve un objeto TransportFrame que contiene los tres vectores del "parallel transport frame"
-    return new TransportFrame(tangent, normal, binormal);
-  }
-
   PVector calculateLeafPosition(TreeNode branch, float angle) {
     float radius = branchNodeWidth;  // Ajusta el radio según sea necesario
     PVector positionOffset = new PVector(branch.pos.x, branch.pos.y, branch.pos.z);
@@ -169,13 +139,6 @@ class Tree {
     float z = positionOffset.z;  // Mantén la posición en el mismo plano para simplificar
 
     return new PVector(x, y, z);
-  }
-
-  PVector calculateLeafOrientation(PVector tangent, PVector normal, PVector binormal) {
-    // Utiliza el "parallel transport frame" para calcular la orientación de la hoja
-    // Puedes experimentar con la combinación de estos vectores para obtener el efecto deseado
-    PVector orientation = tangent.copy();  // En este ejemplo, la hoja apunta en la dirección de la rama
-    return orientation;
   }
 
   boolean shouldGenerateLeavesForNode(float leavesQuantity) {
@@ -208,18 +171,8 @@ class Tree {
   }
 
   void updateLeafPos(Leaf l) {
-    PVector tangent, normal, binormal;
-    // Calcula el "parallel transport frame" para la rama
-    TransportFrame transportFrame = calculateParallelTransportFrame(l.associatedNode);
-    tangent = transportFrame.tangent;
-    normal = transportFrame.normal;
-    binormal = transportFrame.binormal;
-
     PVector leafPosition = calculateLeafPosition(l.associatedNode, l.angle);
-    PVector leafOrientation = calculateLeafOrientation(tangent, normal, binormal);
-
     l.setPos(leafPosition);
-    l.orientation = leafOrientation;
   }
 
   void display() {

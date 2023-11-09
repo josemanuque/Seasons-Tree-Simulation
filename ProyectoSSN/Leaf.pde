@@ -4,13 +4,11 @@ class Leaf extends AgentSystem3D {
   float k = 0.1;
   float friction = 0.1;
   float drag = 0.01;
-  PVector orientation;
   color c;
   float size;
   TreeNode associatedNode;
   float angle;
-  float mouseDist = 5;
-  int numPoints = 7;
+  int numPoints = 8;
   int numFixedPoints = 4;
   PVector pos;
 
@@ -25,8 +23,8 @@ class Leaf extends AgentSystem3D {
   void createLeaf() {
     for (int i = 0; i < numPoints; i++) {
       float angle = map(i, 0, numPoints, 0, TWO_PI);
-      float x = pos.x + cos(angle) * mouseDist;
-      float y = pos.y + sin(angle) * (mouseDist * 0.5); // Ajustar la forma ovalada
+      float x = pos.x + cos(angle) * size;
+      float y = pos.y + sin(angle) * (size * 0.5); // Ajustar la forma ovalada
       Agent3D a = new Agent3D(x, y, pos.z, mass, 0);
       agents.add(a);
     }
@@ -38,10 +36,10 @@ class Leaf extends AgentSystem3D {
       springs.add(new Spring(a1, a2, a1.pos.dist(a2.pos), k));
     }
 
-    agents.get(2).fix();
-    agents.get(3).fix();
-    agents.get(4).fix();
-    agents.get(5).fix();
+    //agents.get(5).fix();
+    agents.get(6).fix();
+    //agents.get(4).fix();
+    //agents.get(5).fix();
 
     for (Agent3D a : agents) {
       a.randomVel(1);
@@ -54,7 +52,6 @@ class Leaf extends AgentSystem3D {
         a.applyFriction(friction);
         a.applyDrag(drag);
         a.update();
-        //a.display();
       } else
       for (Agent3D a : agents) {
         a.resetForces();
@@ -94,11 +91,16 @@ class Leaf extends AgentSystem3D {
     pos = newPos.copy();
     for (int i = 0; i < agents.size(); i++) {
       float angle = map(i, 0, numPoints, 0, TWO_PI);
-      float x = pos.x + cos(angle) * mouseDist;
-      float y = pos.y + sin(angle) * (mouseDist * 0.5); // Ajustar la forma ovalada
+      float x = pos.x + cos(angle) * size;
+      float y = pos.y + sin(angle) * (size * 0.5); // Ajustar la forma ovalada
       float z = pos.z;
       agents.get(i).pos.set(x, y, z);
     }
+
+    //agents.get(5).fix();
+    agents.get(6).fix();
+    //agents.get(4).fix();
+    //agents.get(5).fix();
   }
 
   boolean isAttached() {

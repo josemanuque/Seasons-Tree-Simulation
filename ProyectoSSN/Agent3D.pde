@@ -27,9 +27,6 @@ class Agent3D {
     pushMatrix();
     translate(pos.x, pos.y, pos.z);
     noStroke();
-    //fill(c);
-    //sphereDetail(6);
-    //sphere(r * 2);
     popMatrix();
   }
   void randomVel(float mag) {

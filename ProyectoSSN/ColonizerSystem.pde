@@ -10,12 +10,11 @@ class ColonizerSystem {
     this.treeNodes = treeNodes;
     this.createBranchColonizers();
   }
-  
-  
-  /* 
+
+  /*
    * Creates the colonizers.
-   * Uses an algorithm that is based on creating random positions 
-   * that as a whole take the form of an empty half sphere. 
+   * Uses an algorithm that is based on creating random positions
+   * that as a whole take the form of an empty half sphere.
    */
   void createBranchColonizers() {
     float radius = min(width, height) / 2.0 * 0.8;
@@ -26,12 +25,6 @@ class ColonizerSystem {
       float x = radius * sin(phi) * cos(theta) * random(0.7, 1.8);
       float y = radius * cos(phi) * random(0.7, 1.8) + 200;  // Cambiado sin(phi) por cos(phi)
       float z = radius * sin(phi) * sin(theta) * random(0.7, 1.8);
-      
-      //float theta = random(0, TWO_PI);
-      //float phi = random(PI / 2, PI);  // Limita phi a la mitad inferior de la esfera
-      //float x = radius * sin(phi) * cos(theta) * random(0.7, 2.0);
-      //float y = radius * cos(phi) * random(-1, 1);  // Cambiado sin(phi) por cos(phi)
-      //float z = radius * sin(phi) * sin(theta) * random(0.7, 2.0);
 
       Colonizer colonizer = new Colonizer(new PVector(x, y, z));
       colonizers.add(colonizer);
@@ -39,8 +32,8 @@ class ColonizerSystem {
     colonizers.size();
   }
 
-  /* 
-   * For each colonizer, it finds the closest tree node and 
+  /*
+   * For each colonizer, it finds the closest tree node and
    * applies influence for position of the next generation node
    * Applies influence only if the closest node is within the minimum atraction distance.
    * If the closest node is beyond the maximum distance to remove the colonizer.
@@ -79,7 +72,7 @@ class ColonizerSystem {
 
   /* Checks if a any colonizer is close enough to a specific tree node
    * If its close enough returns true, else false.
-   * Used by trunk nodes to check if they are close enough to an atractor to stop trunk generation. 
+   * Used by trunk nodes to check if they are close enough to an atractor to stop trunk generation.
    */
   boolean isCloseEnough(TreeNode t) {
     for (Colonizer c : colonizers) {
@@ -90,28 +83,11 @@ class ColonizerSystem {
     }
     return false;
   }
-  
+
   // Displays all the colonizers.
   void display() {
     for (Colonizer c : colonizers) {
       c.display();
     }
   }
-  
-  // Deprecated
-  /*   void applyInfluence(){
-   for (TreeNode t : treeNodes) {
-   t.applyInfluence();
-   }
-   } */
-
-  /*   void deleteColonizers(){
-   Iterator<Colonizer> iterator = colonizers.iterator();
-   while (iterator.hasNext()) {
-   Colonizer c = iterator.next();
-   if (!c.isAlive) {
-   iterator.remove();
-   }
-   }
-   } */
 }

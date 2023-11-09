@@ -57,7 +57,6 @@ class TreeNode {
     pos.add(vel);
     acc.mult(0);
     springForce.mult(-1);
-    //parent.applyWindForce(springForce);
   }
 
   PVector calculateSpringForce() {
@@ -68,7 +67,7 @@ class TreeNode {
     springForce.div(2);
     return springForce;
   }
-  
+
   PVector calculateDampingForce() {
     // Calcula la fuerza de amortiguación proporcional a la velocidad
     PVector dampingForce = vel.copy().mult(-dampingFactor);
@@ -111,6 +110,5 @@ class TreeNode {
     stroke(114, 95, 75);
 
     line3D(pos.x, pos.y, pos.z, parent.pos.x, parent.pos.y, parent.pos.z, sw, c);
-
   }
 }

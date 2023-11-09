@@ -12,7 +12,7 @@ class Ground {
     c = groundColor;
   }
 
-  void generateTerrain(float scale, float maxHeight) {
+  void generateTerrain(float maxHeight) {
     flying -= 0.002;
 
     float xOff = flying;
@@ -25,8 +25,8 @@ class Ground {
       xOff += 0.1;
     }
   }
-  
-  void displayBox(){
+
+  void displayBox() {
     if (displayBoxEnabled) {
       pushMatrix();
       translate(0, 465, 0);
@@ -51,15 +51,14 @@ class Ground {
       endShape();
     }
     popMatrix();
-    
   }
-  
+
   void changeColor(color groundColor) {
     c = groundColor;
     display();
   }
-  
-  void changeBox(boolean b){
+
+  void changeBox(boolean b) {
     displayBoxEnabled = b;
   }
 }
