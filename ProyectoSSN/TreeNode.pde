@@ -81,6 +81,7 @@ class TreeNode {
       f.div(mass);
       acc.add(f);
     }
+  }
   void line3D(float x1, float y1, float z1, float x2, float y2, float z2, float weight, color strokeColour) {
     // was called drawLine; programmed by James Carruthers
     // see http://processing.org/discourse/yabb2/YaBB.pl?num=1262458611/0#9

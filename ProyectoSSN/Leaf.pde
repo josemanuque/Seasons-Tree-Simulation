@@ -7,7 +7,6 @@ class Leaf extends AgentSystem3D {
   PVector orientation;
   color c;
   float size;
-  float mass;
   TreeNode associatedNode;
   float angle;
   float mouseDist = 5;

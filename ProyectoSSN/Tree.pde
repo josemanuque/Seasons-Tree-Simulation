@@ -12,7 +12,7 @@ class Tree {
   int trunkNodeLength = 10;
   int branchNodeLength = 10;
   int maxLeavesPerNode = 3;
-  float leafGenerationProbability = 0.4;
+  float leafGenerationProbability = 0.08;
 
   Tree() {
     treeNodes = new ArrayList<TreeNode>();
@@ -110,7 +110,7 @@ class Tree {
   void generateLeaves(color leafColor) {
 
     for (TreeNode node : treeNodes) {
-      if (node.isBranch && shouldGenerateLeavesForNode(node)) {
+      if (node.isBranch && shouldGenerateLeavesForNode()) {
         int numLeavesPerBranch = int(random(maxLeavesPerNode));
         PVector tangent, normal, binormal;
         float angle = 0.0;  // Inicializa el ángulo de posición de la hoja
@@ -234,6 +234,11 @@ class Tree {
       t.mass = mass;
       t.display();
     }
+    
+    for (int i = 1; i < sizeTreeNodes; i++) {
+      TreeNode t = treeNodes.get(i);
+      t.update();
+    }
   }
 
   void displayLeaves() {
@@ -242,11 +247,6 @@ class Tree {
       Leaf l = leaves.get(i);
       l.display();
       updateLeafPos(l);
-    }
-
-    for (int i = 1; i < sizeTreeNodes; i++) {
-      TreeNode t = treeNodes.get(i);
-      t.update();
     }
   }
 }

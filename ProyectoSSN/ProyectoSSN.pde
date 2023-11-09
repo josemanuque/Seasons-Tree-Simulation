@@ -36,7 +36,7 @@ void draw() {
   } */
 
   season.initialSeason();
-
+  keyPressed();
 
 }
 
@@ -52,5 +52,12 @@ void keyPressed() {
   }
   if (keyPressed && key == 'o') {
     season.specialSeason(#8B5737, #FFA500);
+  }
+  if(keyPressed && keyCode == LEFT){
+    season.tree.applyWindForce(new PVector(-0.1, random(-0.1, 0.1), random(-0.1, 0.1)));
+    //println("Entered");
+  }
+  if(keyPressed && keyCode == RIGHT){
+    season.tree.applyWindForce(new PVector(0.1, random(-0.1, 0.1), random(-0.1, 0.1)));
   }
 }
