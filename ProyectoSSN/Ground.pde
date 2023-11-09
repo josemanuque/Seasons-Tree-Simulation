@@ -1,7 +1,6 @@
 class Ground {
   float[][] terrain;
   int cols, rows;
-  float flying = 0;
   color c;
   boolean displayBoxEnabled = true;
 
@@ -12,10 +11,8 @@ class Ground {
     c = groundColor;
   }
 
-  void generateTerrain(float maxHeight) {
-    flying -= 0.002;
-
-    float xOff = flying;
+void generateTerrain(float maxHeight) {
+    float xOff = 0;
     for (int x = 0; x < cols; x++) {
       float yOff = 0;
       for (int z = 0; z < rows; z++) {
@@ -24,7 +21,7 @@ class Ground {
       }
       xOff += 0.1;
     }
-  }
+}
 
   void displayBox() {
     if (displayBoxEnabled) {
