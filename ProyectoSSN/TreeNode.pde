@@ -3,7 +3,7 @@ class TreeNode {
   float mass = 4;
   float k = 0.1;
   float restLen = 5;
-  float dampingFactor = 0.005; //0.05 con 1 de viento se ve bien // 0.005 para 0.1 de viento
+  float dampingFactor = 0.05; //0.05 con 1 de viento se ve bien // 0.005 para 0.1 de viento
   PVector pos;
   PVector vel;
   PVector acc;
