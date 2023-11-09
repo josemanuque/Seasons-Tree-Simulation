@@ -14,12 +14,12 @@ class Leaf extends AgentSystem3D {
   int numFixedPoints = 4;
   PVector pos;
 
-  Leaf(PVector pos, PVector orientation, color leafColor) {
+  Leaf(PVector pos, color leafColor, float leafSize) {
     super();
     springs = new ArrayList();
     this.pos = pos;
-    this.orientation = orientation;
     this.c = leafColor;
+    this.size = leafSize;
   }
 
   void createLeaf() {
@@ -27,7 +27,7 @@ class Leaf extends AgentSystem3D {
       float angle = map(i, 0, numPoints, 0, TWO_PI);
       float x = pos.x + cos(angle) * mouseDist;
       float y = pos.y + sin(angle) * (mouseDist * 0.5); // Ajustar la forma ovalada
-      Agent3D a = new Agent3D(x, y, pos.z, mass);
+      Agent3D a = new Agent3D(x, y, pos.z, mass, 0);
       agents.add(a);
     }
 
@@ -66,5 +66,9 @@ class Leaf extends AgentSystem3D {
       vertex(a.pos.x, a.pos.y, a.pos.z);
     }
     endShape(CLOSE);
+  }
+  void clear() {
+    agents.clear();
+    springs.clear();
   }
 }

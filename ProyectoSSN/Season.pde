@@ -3,6 +3,8 @@ class Season {
   Tree tree;
   Ground ground;
   color groundColor = color(#005c00);
+  AgentSystem3D sys = new AgentSystem3D();
+  PVector gravity = new PVector(0, 0.1);
 
   Season() {
     tree = new Tree();
@@ -18,34 +20,10 @@ class Season {
     tree.displayLeaves();
   }
 
-  void specialSeason(color groundColor, color leafColor) {
+  void specialSeason(color groundColor, color leafColor, float leafSize, float leavesQuantity) {
+    tree.deleteLeaves();
     this.groundColor = groundColor;
     ground.display(groundColor);
-    tree.generateLeaves(leafColor);
-    //tree.displayLeaves();
+    tree.generateLeaves(leafColor, leafSize, leavesQuantity);
   }
-
-  //void winter() {
-  //  ground.changeColor(#FFFFFF);
-  //  tree.generateLeaves(#FFFFFF);
-  //  tree.displayLeaves();
-  //}
-
-  //void spring() {
-  //  ground.changeColor(#8ace3d);
-  //  tree.generateLeaves(#8ace3d);
-  //  tree.displayLeaves();
-  //}
-
-  //void summer() {
-  //  ground.changeColor(#005c00);
-  //  tree.generateLeaves(#005c00);
-  //  tree.displayLeaves();
-  //}
-
-  //void autumn() {
-  //  ground.changeColor(#8B5737);
-  //  tree.generateLeaves(#8B5737);
-  //  tree.displayLeaves();
-  //}
 }

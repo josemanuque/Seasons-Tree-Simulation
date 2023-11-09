@@ -7,11 +7,11 @@ class Agent3D {
   float mass;
   boolean fixed;
 
-  Agent3D(float x, float y, float z, float mass) {
+  Agent3D(float x, float y, float z, float mass, color agentColor) {
     pos = new PVector(x, y, z);
     vel = new PVector(0, 0, 0);
     acc = new PVector(0, 0, 0);
-    c = color(random(128, 255), random(128, 255), random(128, 255), 200);
+    c = agentColor;
     this.mass = mass;
     r = sqrt(mass / PI) * 2;
     fixed = false;

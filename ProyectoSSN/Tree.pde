@@ -107,10 +107,10 @@ class Tree {
    * - Uses parallel transport frame methods to get the proper position and orientarion of the leaves.
    * - Each valid node will have a random of maxLeavesPerNode.
    */
-  void generateLeaves(color leafColor) {
+  void generateLeaves(color leafColor, float leafSize, float leavesQuantity) {
 
     for (TreeNode node : treeNodes) {
-      if (node.isBranch && shouldGenerateLeavesForNode()) {
+      if (node.isBranch && shouldGenerateLeavesForNode(leavesQuantity)) {
         int numLeavesPerBranch = int(random(maxLeavesPerNode));
         PVector tangent, normal, binormal;
         float angle = 0.0;  // Inicializa el ángulo de posición de la hoja
@@ -126,7 +126,7 @@ class Tree {
           PVector leafPosition = calculateLeafPosition(node, angle);
           PVector leafOrientation = calculateLeafOrientation(tangent, normal, binormal);
 
-          Leaf leaf = new Leaf(leafPosition, leafOrientation, leafColor);
+          Leaf leaf = new Leaf(leafPosition, leafColor, leafSize);
           leaf.associatedNode = node;
           leaf.angle = angle;
           leaf.createLeaf();
@@ -172,9 +172,9 @@ class Tree {
     return orientation;
   }
 
-  boolean shouldGenerateLeavesForNode() {
+  boolean shouldGenerateLeavesForNode(float leavesQuantity) {
     // Generar hojas de manera aleatoria
-    return random(1) < leafGenerationProbability;
+    return random(1) < leavesQuantity;
   }
 
   void applyWindForce(PVector windForce) {
@@ -204,7 +204,6 @@ class Tree {
 
   void display() {
     int sizeTreeNodes = treeNodes.size();
-    
 
     // Trunk display
     for (int i = 1; i < trunkEndIndex; i++) {
@@ -234,7 +233,7 @@ class Tree {
       t.mass = mass;
       t.display();
     }
-    
+
     for (int i = 1; i < sizeTreeNodes; i++) {
       TreeNode t = treeNodes.get(i);
       t.update();
@@ -247,6 +246,13 @@ class Tree {
       Leaf l = leaves.get(i);
       l.display();
       updateLeafPos(l);
+    }
+  }
+  void deleteLeaves() {
+    int sizeLeaves = leaves.size();
+    for (int i = 0; i < sizeLeaves; i++) {
+      Leaf l = leaves.get(i);
+      l.clear();
     }
   }
 }

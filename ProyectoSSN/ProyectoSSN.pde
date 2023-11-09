@@ -36,22 +36,20 @@ void draw() {
   } */
 
   season.initialSeason();
-  keyPressed();
-
 }
 
 void keyPressed() {
   if (keyPressed && key == 'i') {
-    season.specialSeason(#FFFFFF, #FFFFFF);
+    season.specialSeason(#FFFFFF, #FFFFFF, 5, 0.3);
   }
   if (keyPressed && key == 'p') {
-    season.specialSeason(#8ace3d, #d5408e);
+    season.specialSeason(#8ace3d, #d5408e, 5, 0.6);
   }
   if (keyPressed && key == 'v') {
-    season.specialSeason(#005c00, #005c00);
+    season.specialSeason(#005c00, #005c00, 9, 0.6);
   }
   if (keyPressed && key == 'o') {
-    season.specialSeason(#8B5737, #FFA500);
+    season.specialSeason(#8B5737, #FFA500, 5, 0.4);
   }
   if(keyPressed && keyCode == LEFT){
     season.tree.applyWindForce(new PVector(-0.1, random(-0.1, 0.1), random(-0.1, 0.1)));

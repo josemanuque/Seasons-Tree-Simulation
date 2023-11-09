@@ -4,15 +4,15 @@ class AgentSystem3D {
   AgentSystem3D() {
     agents = new ArrayList<Agent3D>();
   }
-  
+
   void update() {
     for (Agent3D a : agents) {
       a.update();
       a.display();
     }
   }
-  void addAgent(float x, float y, float z, float mass) {
-    Agent3D a = new Agent3D(x, y, z, mass);
+  void addAgent(float x, float y, float z, float mass, color c) {
+    Agent3D a = new Agent3D(x, y, z, mass, c);
     a.randomVel(1);
     agents.add(a);
   }
