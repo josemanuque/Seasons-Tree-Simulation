@@ -10,7 +10,7 @@ void setup() {
   size(800, 600, P3D);
   //fullScreen(P3D, 1);
   cam = new PeasyCam(this, 0, 0, 0, 2000);
-  season = new Season();
+  season = new Season(100, 100);
 }
 
 void draw() {
