@@ -12,7 +12,7 @@ class Tree {
   int trunkNodeLength = 10;
   int branchNodeLength = 10;
   int maxLeavesPerNode = 3;
-  float leafGenerationProbability = 0.08;
+  float leafGenerationProbability = 0.4;
 
   Tree() {
     treeNodes = new ArrayList<TreeNode>();
@@ -96,7 +96,7 @@ class Tree {
         n.influenceDirection.z = 0;
       }
     }
-    generateLeaves();
+    //generateLeaves();
   }
 
   /*
@@ -107,11 +107,8 @@ class Tree {
    * - Uses parallel transport frame methods to get the proper position and orientarion of the leaves.
    * - Each valid node will have a random of maxLeavesPerNode.
    */
-  void generateLeaves() {
-    //if(leafGenerationEnded){
-    //  println("HOLA");
-    //  return;
-    //}
+  void generateLeaves(color leafColor) {
+
     for (TreeNode node : treeNodes) {
       if (node.isBranch && shouldGenerateLeavesForNode(node)) {
         int numLeavesPerBranch = int(random(maxLeavesPerNode));
@@ -128,11 +125,11 @@ class Tree {
         for (int i = 0; i < numLeavesPerBranch; i++) {
           PVector leafPosition = calculateLeafPosition(node, angle);
           PVector leafOrientation = calculateLeafOrientation(tangent, normal, binormal);
-          float leafSize = 10.0;  // Ajusta el tamaño según sea necesario
 
-          Leaf leaf = new Leaf(leafPosition, leafOrientation, leafSize);
+          Leaf leaf = new Leaf(leafPosition, leafOrientation, leafColor);
           leaf.associatedNode = node;
           leaf.angle = angle;
+          leaf.createLeaf();
           leaves.add(leaf);
 
           // Aumenta el ángulo para posicionar la siguiente hoja
@@ -175,7 +172,7 @@ class Tree {
     return orientation;
   }
 
-  boolean shouldGenerateLeavesForNode(TreeNode node) {
+  boolean shouldGenerateLeavesForNode() {
     // Generar hojas de manera aleatoria
     return random(1) < leafGenerationProbability;
   }
@@ -207,7 +204,7 @@ class Tree {
 
   void display() {
     int sizeTreeNodes = treeNodes.size();
-    int sizeLeaves = leaves.size();
+    
 
     // Trunk display
     for (int i = 1; i < trunkEndIndex; i++) {
@@ -237,6 +234,10 @@ class Tree {
       t.mass = mass;
       t.display();
     }
+  }
+
+  void displayLeaves() {
+    int sizeLeaves = leaves.size();
     for (int i = 0; i < sizeLeaves; i++) {
       Leaf l = leaves.get(i);
       l.display();
