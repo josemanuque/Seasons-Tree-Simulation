@@ -27,9 +27,9 @@ class Agent3D {
     pushMatrix();
     translate(pos.x, pos.y, pos.z);
     noStroke();
-    fill(c);
-    sphereDetail(6);
-    sphere(r * 2);
+    //fill(c);
+    //sphereDetail(6);
+    //sphere(r * 2);
     popMatrix();
   }
   void randomVel(float mag) {
@@ -63,5 +63,10 @@ class Agent3D {
   }
   void unfix() {
     fixed = false;
+  }
+
+  void resetForces() {
+    vel = new PVector(0, 0, 0);
+    acc = new PVector(0, 0, 0);
   }
 }

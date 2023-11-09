@@ -12,7 +12,13 @@ class Tree {
   int trunkNodeLength = 10;
   int branchNodeLength = 10;
   int maxLeavesPerNode = 3;
-  float leafGenerationProbability = 0.08;
+
+  float timeSinceLastLeafFall = 0;
+  float leafMinTimeInterval = 1;
+  float leafMaxTimeInterval = 2;
+  float leafFallChance = 0.005;
+  ArrayList<Leaf> fallingLeaves = new ArrayList();
+  PVector currentWindForce = new PVector();
 
   Tree() {
     treeNodes = new ArrayList<TreeNode>();
@@ -185,6 +191,20 @@ class Tree {
       // Aplica la fuerza de viento al nodo
       t.applyWindForce(windForce);
     }
+
+    currentWindForce.add(windForce);
+
+    //Leaf wind
+
+    for (int i = leaves.size()-1; i >= 0; i--) {
+      Leaf l = leaves.get(i);
+      l.applyForce(windForce);
+    }
+
+    for (int i = fallingLeaves.size()-1; i >= 0; i--) {
+      Leaf l = fallingLeaves.get(i);
+      l.applyForce(windForce);
+    }
   }
 
   void updateLeafPos(Leaf l) {
@@ -198,7 +218,7 @@ class Tree {
     PVector leafPosition = calculateLeafPosition(l.associatedNode, l.angle);
     PVector leafOrientation = calculateLeafOrientation(tangent, normal, binormal);
 
-    l.pos = leafPosition;
+    l.setPos(leafPosition);
     l.orientation = leafOrientation;
   }
 
@@ -241,18 +261,60 @@ class Tree {
   }
 
   void displayLeaves() {
-    int sizeLeaves = leaves.size();
-    for (int i = 0; i < sizeLeaves; i++) {
+    timeSinceLastLeafFall += 0.0166;//60 fps delta time
+    for (int i = leaves.size()-1; i >= 0; i--) {
       Leaf l = leaves.get(i);
       l.display();
       updateLeafPos(l);
+      maybeLeafFall(l);
+    }
+
+    for (int i = fallingLeaves.size()-1; i >= 0; i--) {
+      Leaf l = fallingLeaves.get(i);
+      l.display();
+      l.update();
+      l.applyGravity(new PVector(0, 0.1));
     }
   }
+
   void deleteLeaves() {
     int sizeLeaves = leaves.size();
     for (int i = 0; i < sizeLeaves; i++) {
       Leaf l = leaves.get(i);
       l.clear();
     }
+    leaves.clear();
+    for (int i = 0; i < fallingLeaves.size(); i++) {
+      Leaf l = fallingLeaves.get(i);
+      l.clear();
+    }
+    fallingLeaves.clear();
+  }
+
+  void maybeLeafFall(Leaf l) {
+    if (timeSinceLastLeafFall > leafMaxTimeInterval) {
+      detachLeaf(l);
+      timeSinceLastLeafFall = 0;
+    }
+    if (timeSinceLastLeafFall > leafMinTimeInterval) {
+      if (random(0, 1) <= leafFallChance) {
+        detachLeaf(l);
+        timeSinceLastLeafFall = 0;
+      }
+    }
+  }
+
+  Leaf getRandomAttachedLeaf() {
+    if (leaves.size() == 0)
+      return null;
+    return leaves.get(floor(random(0, leaves.size()-1)));
+  }
+
+  void detachLeaf(Leaf l) {
+    l.detach();
+    leaves.remove(l);
+    l.applyGravity(new PVector(0, 0.81));
+    l.applyForce(currentWindForce);
+    fallingLeaves.add(l);
   }
 }
